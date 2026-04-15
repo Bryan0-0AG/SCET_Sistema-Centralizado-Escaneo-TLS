@@ -1,65 +1,64 @@
-# 🔐 SCET — Sistema Centralizado de Escaneo TLS
+# 🔐 TCSS - TLS Centralized Scanning System
 
-> Herramienta de monitoreo y análisis de certificados TLS/SSL para múltiples dominios, con dashboard interactivo y clasificación de riesgos en tiempo real.
-
----
-
-## 📋 Descripción
-
-**SCET** es una aplicación Python que centraliza el escaneo de certificados TLS en una lista de dominios, analiza su configuración de seguridad (versión TLS, cifrados, fecha de vencimiento, emisor) y presenta los resultados en un dashboard web interactivo construido con **Plotly Dash**.
-
-El sistema clasifica automáticamente el nivel de riesgo de cada dominio (`BAJO`, `MEDIO`, `ALTO`, `CRÍTICO`) según los cifrados detectados y la proximidad del vencimiento del certificado, permitiendo a equipos de seguridad tomar decisiones rápidas y priorizadas.
+> A TLS/SSL certificate monitoring and analysis tool for multiple domains, featuring an interactive dashboard and real-time risk classification.
 
 ---
 
-## 🗂️ Estructura del proyecto
+## 📋 Description
+
+**TCSS** is a Python application that centralizes TLS certificate scanning across a list of domains, analyzes their security configuration (TLS version, cipher suites, expiration date, issuer) and presents the results in an interactive web dashboard built with **Plotly Dash**.
+
+The system automatically classifies the risk level of each domain (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`) based on detected cipher suites and certificate expiration proximity, enabling security teams to make fast, prioritized decisions.
+
+---
+
+## 🗂️ Project Structure
 
 ```
-SCET_Sistema-Centralizado-Escaneo-TLS/
+TCSS_TLS-Centralized-Scanning-System/
 │
-├── main.py                  # Punto de entrada — lanza el dashboard en localhost:8050
-├── config.py                # Configuración global (puertos, cifrados, colores, rutas)
-├── Prueba_paginas.py        # Prototipo de navegación multi-página con Dash
+├── main.py                  # Entry point — launches the dashboard at localhost:8050
+├── config.py                # Global configuration (ports, ciphers, colors, paths)
 │
-├── scanner/                 # Módulo de escaneo TLS
-├── domain/                  # Gestión y registro de dominios
-├── dashboard/               # Componentes del dashboard Dash
+├── scanner/                 # TLS scanning module
+├── domain/                  # Domain management and registration
+├── dashboard/               # Dash dashboard components
 └── storage/
-    ├── TLS.SCAN_Dominios.csv        # Resultados históricos de escaneos
-    └── Dominios_registrados.json    # Listado de dominios a monitorear
+    ├── TLS.SCAN_Domains.csv        # Historical scan results
+    └── Registered_Domains.json    # List of domains to monitor
 ```
 
 ---
 
-## ⚙️ Funcionalidades
+## ⚙️ Features
 
-- **Escaneo multi-puerto**: Analiza los puertos más relevantes en seguridad (443, 80, 22, 445, 3389, 21, 8080).
-- **Clasificación de cifrados**: Detecta automáticamente cifrados inseguros (`RC4`, `DES`, `3DES`, `NULL`, `EXPORT`), moderados (`AES128`, `SHA1`) y seguros (`AES256`, `CHACHA20`, `SHA256`).
-- **Niveles de riesgo con colores**: Visualización intuitiva con código de color por nivel de riesgo.
-- **Dashboard interactivo**: Interfaz web con tabla de resultados, filtros y navegación entre secciones (Dashboard, Tabla, Admin).
-- **Persistencia de resultados**: Los escaneos se guardan en CSV y JSON para consulta histórica.
-- **Zona horaria configurable**: Timestamps ajustados a `America/Bogota` por defecto.
+- **Multi-port scanning**: Analyzes the most security-relevant ports (443, 80, 22, 445, 3389, 21, 8080).
+- **Cipher suite classification**: Automatically detects insecure (`RC4`, `DES`, `3DES`, `NULL`, `EXPORT`), moderate (`AES128`, `SHA1`), and secure (`AES256`, `CHACHA20`, `SHA256`) cipher suites.
+- **Color-coded risk levels**: Intuitive visual display with color coding per risk level.
+- **Interactive dashboard**: Web interface with results table, filters, and navigation between sections (Dashboard, Table, Admin).
+- **Result persistence**: Scans are saved in CSV and JSON formats for historical reference.
+- **Configurable timezone**: Timestamps defaulted to `America/Bogota`.
 
 ---
 
-## 🚀 Instalación y uso
+## 🚀 Installation & Usage
 
-### Requisitos
+### Requirements
 
 - Python 3.8+
-- Las siguientes librerías (instalar con `pip`):
+- The following libraries (install via `pip`):
 
 ```bash
 pip install dash plotly pytz
 ```
 
-### Ejecutar el dashboard
+### Run the dashboard
 
 ```bash
 python main.py
 ```
 
-Luego abre tu navegador en:
+Then open your browser at:
 
 ```
 http://127.0.0.1:8050
@@ -67,50 +66,50 @@ http://127.0.0.1:8050
 
 ---
 
-## 📊 Clasificación de riesgos
+## 📊 Risk Classification
 
-| Nivel    | Color       | Criterio                                      |
-|----------|-------------|-----------------------------------------------|
-| BAJO     | 🟢 Verde    | Cifrados seguros, certificado vigente          |
-| MEDIO    | 🟡 Naranja  | Cifrados moderados o vencimiento próximo       |
-| ALTO     | 🟠 Naranja oscuro | Cifrados débiles detectados              |
-| CRÍTICO  | 🔴 Rojo     | Cifrados inseguros o certificado vencido       |
-
----
-
-## 📁 Almacenamiento de datos
-
-Los resultados se guardan automáticamente con las siguientes columnas:
-
-| Columna        | Descripción                            |
-|----------------|----------------------------------------|
-| Dominio        | Nombre del dominio escaneado           |
-| Fecha scan     | Fecha y hora del escaneo               |
-| TLS            | Versión del protocolo TLS detectada    |
-| Vence en       | Días restantes para vencimiento        |
-| Emisor         | Autoridad certificadora (CA)           |
-| Cifrado        | Suite de cifrado detectada             |
-| Riesgo         | Nivel de riesgo clasificado            |
-| Observaciones  | Notas adicionales del análisis         |
+| Level    | Color            | Criteria                                        |
+|----------|------------------|-------------------------------------------------|
+| LOW      | 🟢 Green         | Secure ciphers, valid certificate               |
+| MEDIUM   | 🟡 Yellow        | Moderate ciphers or expiration approaching      |
+| HIGH     | 🟠 Dark Orange   | Weak cipher suites detected                     |
+| CRITICAL | 🔴 Red           | Insecure ciphers or expired certificate         |
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+## 📁 Data Storage
 
-- **Python** — Lenguaje principal
-- **Plotly Dash** — Framework para el dashboard web interactivo
-- **pytz** — Manejo de zonas horarias
-- **CSV / JSON** — Almacenamiento liviano de resultados
+Results are automatically saved with the following columns:
+
+| Column         | Description                              |
+|----------------|------------------------------------------|
+| Domain         | Scanned domain name                      |
+| Scan date      | Date and time of the scan                |
+| TLS            | Detected TLS protocol version            |
+| Expires in     | Days remaining until certificate expiry  |
+| Issuer         | Certificate Authority (CA)               |
+| Cipher         | Detected cipher suite                    |
+| Risk           | Classified risk level                    |
+| Notes          | Additional analysis observations         |
 
 ---
 
-## 📄 Licencia
+## 🛠️ Technologies Used
 
-Este proyecto está bajo la licencia **MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+- **Python** — Core language
+- **Plotly Dash** — Framework for the interactive web dashboard
+- **pytz** — Timezone management
+- **CSV / JSON** — Lightweight result storage
 
 ---
 
-## 👤 Autor
+## 📄 License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👤 Author
 
 **Bryan0-0AG**  
-Proyecto personal de ciberseguridad y monitoreo de infraestructura TLS.
+Personal cybersecurity and TLS infrastructure monitoring project.

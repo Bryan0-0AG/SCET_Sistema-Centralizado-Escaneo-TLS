@@ -3,8 +3,8 @@ import pytz
 
 # ── Rutas ─────────────────────────────────────────────────────────────────────
 ROOT = os.path.dirname(os.path.abspath(__file__))
-RUTA_CSV  = os.path.join(ROOT, "storage", "TLS.SCAN_Dominios.csv")
-RUTA_JSON = os.path.join(ROOT, "storage" ,"Dominios_registrados.json")
+RUTA_CSV  = os.path.join(ROOT, "storage", "TLS.SCAN_Domains.csv")
+RUTA_JSON = os.path.join(ROOT, "storage" ,"Registered_Domains.json")
 
 # ── Zona horaria ──────────────────────────────────────────────────────────────
 ZONA_HORARIA = pytz.timezone("America/Bogota")
